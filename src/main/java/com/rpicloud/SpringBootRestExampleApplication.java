@@ -32,9 +32,6 @@ public class SpringBootRestExampleApplication {
 
     private final Faker faker = new Faker();
 
-    @Autowired
-    private TypeResolver typeResolver;
-
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootRestExampleApplication.class, args);
 	}
@@ -57,19 +54,6 @@ public class SpringBootRestExampleApplication {
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()
-                .pathMapping("/")
-                .directModelSubstitute(LocalDate.class, String.class).genericModelSubstitutes(ResponseEntity.class)
-                .alternateTypeRules(newRule(typeResolver.resolve(DeferredResult.class, typeResolver.resolve(ResponseEntity.class, WildcardType.class)), typeResolver.resolve(WildcardType.class)));
+                .pathMapping("/");
     }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Spring Boot Rest Swagger documentation")
-                .description("This is the documentation of the Spring Boot Rest Swagger documentation")
-                .contact("Kasper Nissen")
-                .license("Apache License Version 2.0")
-                .version("1.0")
-                .build();
-    }
-
 }
